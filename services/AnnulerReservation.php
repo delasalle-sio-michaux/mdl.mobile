@@ -39,26 +39,32 @@ else
 	{	// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
 		include_once ('../modele/DAO.class.php');
 		$dao = new DAO();
-	
-		if ( $dao->existeReservation($numRes) == false)
-		{
-			TraitementAnormal("Erreur : réservation inexistante.");
-		}
+		
+		if ( $dao->getNiveauUtilisateur($nomAdmin, $mdpAdmin) == "inconnu" )
+			TraitementAnormal("Erreur : authentification incorrecte.");
 		else
-		{
-			if ($dao->estLeCreateur($nom, $numRes))
-			{
-				$del = $dao->annulerReservation($numRes);
-				TraitementNormal();
-			}
-			else 
-			{
-				TraitementAnormal("Erreur : problème lors de la suppression de la réservation.");
-			}
 			
-			
+			if ( $dao->existeReservation($numRes) == false)
+			{
+				TraitementAnormal("Erreur : réservation inexistante.");
+			}
+			else
+			{
+				if ($dao->estLeCreateur($nom, $numRes))
+				{
+					
+					$del = $dao->annulerReservation($numRes);
+					TraitementNormal();
+				}
+				else 
+				{
+					TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette reservation.");
+				}
+				
+				
+				
+			}
 		}
-	}
 // Mise en forme finale
 $doc->formatOutput = true;
 // renvoie le contenu XML

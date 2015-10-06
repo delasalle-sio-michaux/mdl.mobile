@@ -390,18 +390,16 @@ class DAO
 		global $ADR_MAIL_EMETTEUR;
 		
 		// envoie un mail de confirmation de l'enregistrement
-		$sujet = "Création de votre compte dans le système de réservation de M2L";
-		$message = "L'administrateur du système de réservations de la M2L vient de vous créer un compte utilisateur.\n\n";
-		$message .= "Les données enregistrées sont :\n\n";
-		$message .= "Votre nom : " . $name . "\n";
-		$message .= "Votre mot de passe : " . $password . " (nous vous conseillons de le changer lors de la première connexion)\n";
-		$message .= "Votre niveau d'accès (0 : invité    1 : utilisateur    2 : administrateur) : " . $level . "\n";
+		$password = $nouveauMdp;
+		$sujet = "Envoi de mot de passe";
+		$message = "Votre nom d'utilisateur est :" . $nomUser;
+		$message = $message . "Votre nouveau mot de passe est : " . $password ;
 		
 		$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 		if ( $ok )
-			$msg = "Enregistrement effectué.";
+			return true;
 		else
-			$msg = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+			return false;
 	}
 
 	// teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
