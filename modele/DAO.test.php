@@ -78,8 +78,8 @@ echo "Existence de la réservation 12 : <b>" . $existe . "</b></p>";
 // // test de la méthode estLeCreateur ---------------------------------------------------------------
 // // modifié par Jim le 25/9/2015
 echo "<h3>Test de estLeCreateur : </h3>";
-if ($dao->estLeCreateur("admin", "20")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "<p>'admin' a créé la réservation 20 : <b>" . $estLeCreateur . "</b><br>";
+if ($dao->estLeCreateur("admin", "19")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "<p>'admin' a créé la réservation 19 : <b>" . $estLeCreateur . "</b><br>";
 if ($dao->estLeCreateur("zenelsy", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
 echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>";
 

@@ -66,17 +66,17 @@ else
 			TraitementAnormal("Erreur : numéro de réservation inexistant.");
 		else{
 			if ($dao->estLeCreateur($nom, $res) == false)
-				TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette réservation.");
+				TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette réservation. ".$nom. " " . $res);
 			else{
 				$laReservation = $dao->getReservation($res);
 				$statut = $laReservation->getStatus();
 				if($statut == 0)
 					TraitementAnormal("Erreur : cette réservation est déjà confirmée");
 				else{
-					if(gmdate("Y-m-d\TH:i:s\Z", $laReservation->getEnd_time())<now())
+					if(time() > $laReservation->getEnd_time())
 						TraitementAnormal("Erreur : cette réservation est déjà passée");
 					else
-						TraitementNormal();
+						TraitementNormal($res, $nom);
 				}
 			}
 		}
@@ -105,5 +105,33 @@ function TraitementAnormal($msg)
 	return;
 }
 
+// fonction de traitement des cas normaux
+function TraitementNormal($reservation, $user)
+{	// redéclaration des données globales utilisées dans la fonction
+	global $doc;
+	global $dao;
+	global $ADR_MAIL_EMETTEUR;
+	
+	$email = $dao->getUtilisateur($user)->getEmail();
+	// envoie un mail de confirmation de l'enregistrement
+	$sujet = "Validation d'un réservation de M2L";
+	$message = "Votre réservation ".$reservation." a bien été validée";
 
+	$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
+	if ( $ok )
+		$msg = "Enregistrement effectué, vous allez recevoir un mail de confirmation.";
+	else
+		$msg = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+	
+	$dao->confirmerReservation($reservation);
+	$msg = "Enregistrement effectué.";
+	// crée l'élément 'data' à la racine du document XML
+	$elt_data = $doc->createElement('data');
+	$doc->appendChild($elt_data);
+	// place l'élément 'reponse' juste après l'élément 'data'
+	$elt_reponse = $doc->createElement('reponse', $msg);
+	$elt_data->appendChild($elt_reponse);
+	//echo $msg;
+	return;
+}
 ?>

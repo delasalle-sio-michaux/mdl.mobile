@@ -320,7 +320,7 @@ class DAO
 	// modifié par Jim le 5/5/2015
 	public function confirmerReservation($idReservation)
 	{	
-		$txt_req = "UPDATE mrbs_entry SET status=0 WHERE status=4";
+		$txt_req = "UPDATE mrbs_entry SET status=0 WHERE status=4 AND id =".$idReservation;
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et de ses paramètres
 		// extraction des données
