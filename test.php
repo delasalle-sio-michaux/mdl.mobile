@@ -1,4 +1,4 @@
 <?php
 echo phpinfo();
-echo "test";
+echo "Modification Opérateur";
 ?>
