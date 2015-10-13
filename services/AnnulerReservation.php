@@ -1,7 +1,7 @@
 <?php
 
 global $doc;		// le document XML à générer
-global $name, $numRes, $password;
+global $nom, $numRes, $mdp;
 
 // inclusion de la classe Outils
 include_once ('../modele/Outils.class.php');
@@ -43,16 +43,14 @@ else
 		if ( $dao->getNiveauUtilisateur($nom, $mdp) == "inconnu" )
 			TraitementAnormal("Erreur : authentification incorrecte.");
 		else
-			
 			if ( $dao->existeReservation($numRes) == false)
 			{
-				TraitementAnormal("Erreur : réservation inexistante.");
+				TraitementAnormal("Erreur : numéro de réservation inexistant.");
 			}
 			else
 			{
 				if ($dao->estLeCreateur($nom, $numRes))
 				{
-					
 					$del = $dao->annulerReservation($numRes);
 					TraitementNormal();
 				}
@@ -60,9 +58,6 @@ else
 				{
 					TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette reservation.");
 				}
-				
-				
-				
 			}
 		}
 // Mise en forme finale
@@ -75,41 +70,44 @@ exit;
 
 function TraitementAnormal($msg)
 {	// redéclaration des données globales utilisées dans la fonction
-global $doc;
-// crée l'élément 'data' à la racine du document XML
-$elt_data = $doc->createElement('data');
-$doc->appendChild($elt_data);
-// place l'élément 'reponse' juste après l'élément 'data'
-$elt_reponse = $doc->createElement('reponse', $msg);
-$elt_data->appendChild($elt_reponse);
-return;
+	global $doc;
+	// crée l'élément 'data' à la racine du document XML
+	$elt_data = $doc->createElement('data');
+	$doc->appendChild($elt_data);
+	// place l'élément 'reponse' juste après l'élément 'data'
+	$elt_reponse = $doc->createElement('reponse', $msg);
+	$elt_data->appendChild($elt_reponse);
+	return;
 }
 
 function TraitementNormal()
 {	
-// redéclaration des données globales utilisées dans la fonction
-global $doc;
-global $name, $numRes, $password, $email ;
-global $ADR_MAIL_EMETTEUR;
-
-// envoie un mail de confirmation de l'enregistrement
-$sujet = "Annulation de la réservation M2L";
-$message = "Vous venez d'annuler la réservation suivante :\n\n";
-$message .= "Votre numero de réservation : " . $numRes . "\n";
-
-$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
-if ( $ok )
-	$msg = "Suppression effectuée.";
-else
-	$msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
-
-// crée l'élément 'data' à la racine du document XML
-$elt_data = $doc->createElement('data');
-$doc->appendChild($elt_data);
-// place l'élément 'reponse' juste après l'élément 'data'
-$elt_reponse = $doc->createElement('reponse', $msg);
-$elt_data->appendChild($elt_reponse);
-return;
+	// redéclaration des données globales utilisées dans la fonction
+	global $doc;
+	global $dao;
+	global $nom, $numRes, $mdp, $email ;
+	global $ADR_MAIL_EMETTEUR;
+	
+	$email = $dao->getUtilisateur($user)->getEmail();
+	
+	// envoie un mail de confirmation de l'enregistrement
+	$sujet = "Annulation de la réservation M2L";
+	$message = "Vous venez d'annuler la réservation suivante :\n\n";
+	$message .= "Votre numero de réservation : " . $numRes . "\n";
+	
+	$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
+	if ( $ok )
+		$msg = "Suppression effectuée.";
+	else
+		$msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+	
+	// crée l'élément 'data' à la racine du document XML
+	$elt_data = $doc->createElement('data');
+	$doc->appendChild($elt_data);
+	// place l'élément 'reponse' juste après l'élément 'data'
+	$elt_reponse = $doc->createElement('reponse', $msg);
+	$elt_data->appendChild($elt_reponse);
+	return;
 }
 
 ?>
