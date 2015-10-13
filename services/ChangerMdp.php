@@ -48,7 +48,8 @@ else
 			TraitementAnormal("Erreur : le nouveau mot de passe et sa confirmation sont différents.");
 		}
 		else {
-			
+			$dao->modifierMdpUser($nom, $nouveauMdp);
+			TraitementNormal($nouveauMdp);
 		}
 	}
 }
@@ -75,31 +76,34 @@ $elt_data->appendChild($elt_reponse);
 return;
 }
 
-function TraitementNormal()
+function TraitementNormal($nouveauMdp)
 {
 	// redéclaration des données globales utilisées dans la fonction
-	/*global $doc;
-	global $name, $numRes, $password ;
+	global $doc;
+	global $dao;
+	global $nom, $numRes, $mdp, $email ;
 	global $ADR_MAIL_EMETTEUR;
-
+	
+	$email = $dao->getUtilisateur($nom)->getEmail();
+	
 	// envoie un mail de confirmation de l'enregistrement
-	$sujet = "Annulation de la réservation M2L";
-	$message = "Vous venez d'annuler la réservation suivante :\n\n";
-	$message .= "Votre numero de réservation : " . $numRes . "\n";
-
+	$sujet = "Changement de mot de passe M2L";
+	$message = "Vous venez de changer votre mot de passe \n\n";
+	$message .= "Votre nouveau mot de passe est : " . $nouveauMdp . "\n";
+	
 	$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 	if ( $ok )
-		$msg = "Suppression effectuée.";
+		$msg = "Enregistrement effectué ; vous allez recevoir un mail de confirmation.";
 	else
-		$msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
-
+		$msg = "Enregistrement non effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+	
 	// crée l'élément 'data' à la racine du document XML
 	$elt_data = $doc->createElement('data');
 	$doc->appendChild($elt_data);
 	// place l'élément 'reponse' juste après l'élément 'data'
 	$elt_reponse = $doc->createElement('reponse', $msg);
 	$elt_data->appendChild($elt_reponse);
-	return;*/
+	return;
 }
 
 ?>
