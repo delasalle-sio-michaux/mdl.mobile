@@ -33,14 +33,14 @@ if ( $nom == "" && $mdp == "" && $numRes == "" )
 
 if ( $nom == "" || $mdp == "" || $numRes == "" )
 {	
-		TraitementAnormal ("Erreur : données incomplètes ou incorrectes.");
+		TraitementAnormal ("Erreur : données incomplètes.");
 }
 else
 	{	// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
 		include_once ('../modele/DAO.class.php');
 		$dao = new DAO();
 		
-		if ( $dao->getNiveauUtilisateur($nomAdmin, $mdpAdmin) == "inconnu" )
+		if ( $dao->getNiveauUtilisateur($nom, $mdp) == "inconnu" )
 			TraitementAnormal("Erreur : authentification incorrecte.");
 		else
 			
@@ -89,7 +89,7 @@ function TraitementNormal()
 {	
 // redéclaration des données globales utilisées dans la fonction
 global $doc;
-global $name, $numRes, $password ;
+global $name, $numRes, $password, $email ;
 global $ADR_MAIL_EMETTEUR;
 
 // envoie un mail de confirmation de l'enregistrement

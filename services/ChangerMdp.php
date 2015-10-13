@@ -22,13 +22,14 @@ $doc->appendChild($elt_commentaire);
 if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
 if ( empty ($_GET ["ancienMdp"]) == true)  $mdp = "";  else   $mdp = $_GET ["ancienMdp"];
 if ( empty ($_GET ["nouveauMdp"]) == true)  $nouveauMdp = "";  else   $nouveauMdp = $_GET ["nouveauMdp"];
-if ( empty ($_GET ["confirmationMdp"]) == true)  $nouveauMdp = "";  else   $nouveauMdp = $_GET ["confirmationMdp"];
+if ( empty ($_GET ["confirmationMdp"]) == true)  $confirmationMdp = "";  else   $confirmationMdp = $_GET ["confirmationMdp"];
 
 if ( $nom == "" && $mdp == "")
 {
 	if ( empty ($_POST ["nom"]) == true)  $nom = "";  else   $nom = $_POST ["nom"];
 	if ( empty ($_POST ["ancienMdp"]) == true)  $mdp = "";  else   $mdp = $_POST ["ancienMdp"];
 	if ( empty ($_GET ["nouveauMdp"]) == true)  $nouveauMdp = "";  else   $nouveauMdp = $_GET ["nouveauMdp"];
+	if ( empty ($_GET ["confirmationMdp"]) == true)  $confirmationMdp = "";  else   $confirmationMdp = $_GET ["confirmationMdp"];
 }
 
 if ( $nom == "" || $mdp == "")
