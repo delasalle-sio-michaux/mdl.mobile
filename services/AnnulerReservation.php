@@ -88,7 +88,7 @@ function TraitementNormal()
 	global $nom, $numRes, $mdp, $email ;
 	global $ADR_MAIL_EMETTEUR;
 	
-	$email = $dao->getUtilisateur($user)->getEmail();
+	$email = $dao->getUtilisateur($nom)->getEmail();
 	
 	// envoie un mail de confirmation de l'enregistrement
 	$sujet = "Annulation de la réservation M2L";
