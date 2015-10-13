@@ -268,7 +268,7 @@ class DAO
 			
 			return $uneReservation;
 		}
-		else{
+		else {
 			return null;
 		}
 	

@@ -49,15 +49,20 @@ else
 			}
 			else
 			{
-				if ($dao->estLeCreateur($nom, $numRes))
-				{
-					$del = $dao->annulerReservation($numRes);
-					TraitementNormal();
-				}
-				else 
-				{
-					TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette reservation.");
-				}
+				$laReservation = $dao->getReservation($numRes);
+				if(time() > $laReservation->getEnd_time())
+					TraitementAnormal("Erreur : cette réservation est déjà passée");
+				else {
+					if ($dao->estLeCreateur($nom, $numRes))
+					{
+						$del = $dao->annulerReservation($numRes);
+						TraitementNormal();
+					}
+					else
+					{
+						TraitementAnormal("Erreur : vous n'êtes pas l'auteur de cette reservation.");
+					}
+				}	
 			}
 		}
 // Mise en forme finale

@@ -70,16 +70,16 @@ echo ('<br>');
 // // modifié par Jim le 25/9/2015
 echo "<h3>Test de existeReservation : </h3>";
 if ($dao->existeReservation("20")) $existe = "oui"; else $existe = "non";
-echo "<p>Existence de la réservation 20 : <b>" . $existe . "</b><br>";
+	echo "<p>Existence de la réservation 20 : <b>" . $existe . "</b><br>";
 if ($dao->existeReservation("12")) $existe = "oui"; else $existe = "non";
-echo "Existence de la réservation 12 : <b>" . $existe . "</b></p>";
+	echo "Existence de la réservation 12 : <b>" . $existe . "</b></p>";
 
 
 // // test de la méthode estLeCreateur ---------------------------------------------------------------
 // // modifié par Jim le 25/9/2015
 echo "<h3>Test de estLeCreateur : </h3>";
-if ($dao->estLeCreateur("admin", "19")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "<p>'admin' a créé la réservation 19 : <b>" . $estLeCreateur . "</b><br>";
+if ($dao->estLeCreateur("admin", "26")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "<p>'admin' a créé la réservation 26 : <b>" . $estLeCreateur . "</b><br>";
 if ($dao->estLeCreateur("zenelsy", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
 echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>";
 
@@ -87,11 +87,11 @@ echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>"
 // // test de la méthode getReservation --------------------------------------------------------------
 // // modifié par Jim le 25/9/2015
 echo "<h3>Test de getReservation : </h3>";
-$laReservation = $dao->getReservation("23");
+$laReservation = $dao->getReservation("27");
 if ($laReservation) 
-echo "<p>La réservation 23 existe : <br>" . utf8_encode($laReservation->toString()) . "</p>";
+echo "<p>La réservation 27 existe : <br>" . utf8_encode($laReservation->toString()) . "</p>";
 else
-echo "<p>La réservation 23 n'existe pas !</p>";	
+echo "<p>La réservation 27 n'existe pas !</p>";	
 $laReservation = $dao->getReservation("25");
 if ($laReservation) 
 echo "<p>La réservation 25 existe : <br>" . utf8_encode($laReservation->toString()) . "</p>";
