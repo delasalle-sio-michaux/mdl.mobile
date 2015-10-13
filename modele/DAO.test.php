@@ -107,11 +107,11 @@ if ($unUtilisateur)
 echo "<p>L'utilisateur admin existe : <br>" . utf8_encode($unUtilisateur->toString()) . "</p>";
 else
 echo "<p>L'utilisateur admin n'existe pas !</p>";
-$unUtilisateur = $dao->getUtilisateur("admin");
+$unUtilisateur = $dao->getUtilisateur("dreauv");
 if ($unUtilisateur)
-echo "<p>L'utilisateur admin existe : <br>" . utf8_encode($unUtilisateur->toString()) . "</p>";
+echo "<p>L'utilisateur dreauv existe : <br>" . utf8_encode($unUtilisateur->toString()) . "</p>";
 else
-echo "<p>L'utilisateur admin n'existe pas !</p>";
+echo "<p>L'utilisateur dreauv n'existe pas !</p>";
 
 
 // // test de la méthode confirmerReservation --------------------------------------------------------

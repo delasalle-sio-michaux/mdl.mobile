@@ -280,10 +280,8 @@ class DAO
 	public function getUtilisateur($nomUser)
 	{	// préparation de la requete de recherche
 		$txt_req = "Select mrbs_users.id, level, mrbs_users.name, password, email";
-		$txt_req = $txt_req . " from mrbs_users, mrbs_room, mrbs_entry";
-		$txt_req = $txt_req . " where mrbs_entry.create_by = mrbs_users.name";
-		$txt_req = $txt_req . " and mrbs_users.name = :nomUser";
-		$txt_req = $txt_req . " group by mrbs_users.id, level, name, email";
+		$txt_req = $txt_req . " from mrbs_users";
+		$txt_req = $txt_req . " where mrbs_users.name = :nomUser";
 		
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et de ses paramètres
