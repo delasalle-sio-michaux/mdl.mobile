@@ -91,9 +91,12 @@ function TraitementNormal($user)
 	global $ADR_MAIL_EMETTEUR;
 	
 	$email = $dao->getUtilisateur($user)->getEmail();
+	$newMdp = Outils::creerMdp();
 	// envoie un mail de confirmation de l'enregistrement
 	$sujet = "Mot de passe M2L";
-	$message = "Votre mot de passe est : " .$dao->getUtilisateur($user)->getPassword();
+	$message = "Votre mot de passe est : " .$newMdp;
+	
+	$dao->modifierMdpUser($user, $newMdp);
 
 	$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 	if ( $ok )
