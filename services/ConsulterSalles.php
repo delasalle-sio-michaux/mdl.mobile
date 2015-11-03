@@ -84,10 +84,11 @@ function TraitementAnormal($msg)
 }
 
 // fonction de traitement des cas normaux
-function TraitementNormal($nomUser)
+function TraitementNormal()
 {	// red�claration des donn�es globales utilis�es dans la fonction
     global $doc;
     global $dao;
+    global $nom;
 
     $lesSalles = $dao->listeSalles();
     $nbSalles = count($lesSalles);
@@ -114,11 +115,11 @@ function TraitementNormal($nomUser)
         $elt_salle->appendChild($elt_id);
         $elt_room  = $doc->createElement('room', utf8_encode($uneSalle->getRoom_name()));
         $elt_salle->appendChild($elt_room);
-        $elt_capacity = $doc->createElement('capacity', utf8_encode(date($uneSalle->getCapacity())));
+        $elt_capacity = $doc->createElement('capacity', utf8_encode($uneSalle->getCapacity()));
         $elt_salle->appendChild($elt_capacity);
-        $elt_area_name   = $doc->createElement('area_name', utf8_encode(date($uneSalle->getAreaName())));
+        $elt_area_name   = $doc->createElement('area_name', utf8_encode($uneSalle->getAeraName()));
         $elt_salle->appendChild($elt_area_name);
-        $elt_area_admin_email  = $doc->createElement('area_admin_email', utf8_encode($uneSalle->getAreaAdminEmail()));
+        $elt_area_admin_email  = $doc->createElement('area_admin_email', utf8_encode($uneSalle->getAeraAdminEmail()));
         $elt_salle->appendChild($elt_area_admin_email);
     }
     return;

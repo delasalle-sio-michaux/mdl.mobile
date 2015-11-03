@@ -66,7 +66,7 @@ else
             if($dao->aPasseDesReservations($nomUser))
                 TraitementAnormal ("Erreur : cet utilisateur a passé des réservations à venir.");
             else{
-                TraitementNormal();
+                TraitementNormal($nomUser);
             }
         }
     }
@@ -108,9 +108,9 @@ function TraitementNormal($nomUser)
 
     $ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
     if ( $ok )
-        $msg = "Enregistrement effectué, vous allez recevoir un mail de confirmation.";
+        $msg = "Suppression effectuée, vous allez recevoir un mail de confirmation.";
     else
-        $msg = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+        $msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
 
     $dao->supprimerUtilisateur($nomUser);
 
