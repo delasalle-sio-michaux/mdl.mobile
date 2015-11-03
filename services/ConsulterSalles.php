@@ -1,56 +1,56 @@
 <?php
-// Service web du projet Réservations M2L
+// Service web du projet Rï¿½servations M2L
 // Ecrit le 24/10/2015 par Roger Alban
 
-// Ce service web permet à un administrateur de consulter les salles disponibles à la réservation
-// Le service web doit recevoir 2 paramètres : nom, mdp
-// Les paramètres peuvent être passés par la méthode GET (pratique pour les tests, mais à éviter en exploitation) :
-//     http://<hébergeur>/SupprimerUtilisateur.php?nomAdmin=zenelsy&mdpAdmin=passe&nomUser=
-// Les paramètres peuvent être passés par la méthode POST (à privilégier en exploitation pour la confidentialité des données) :
-//     http://<hébergeur>/SupprimerUtilisateur.php
+// Ce service web permet ï¿½ un administrateur de consulter les salles disponibles ï¿½ la rï¿½servation
+// Le service web doit recevoir 2 paramï¿½tres : nom, mdp
+// Les paramï¿½tres peuvent ï¿½tre passï¿½s par la mï¿½thode GET (pratique pour les tests, mais ï¿½ ï¿½viter en exploitation) :
+//     http://<hï¿½bergeur>/SupprimerUtilisateur.php?nomAdmin=zenelsy&mdpAdmin=passe&nomUser=
+// Les paramï¿½tres peuvent ï¿½tre passï¿½s par la mï¿½thode POST (ï¿½ privilï¿½gier en exploitation pour la confidentialitï¿½ des donnï¿½es) :
+//     http://<hï¿½bergeur>/SupprimerUtilisateur.php
 
-// déclaration des variables globales pour pouvoir les utiliser aussi dans les fonctions
+// dï¿½claration des variables globales pour pouvoir les utiliser aussi dans les fonctions
 
-// déclaration des variables globales pour pouvoir les utiliser aussi dans les fonctions
-global $doc;		// le document XML à générer
+// dï¿½claration des variables globales pour pouvoir les utiliser aussi dans les fonctions
+global $doc;		// le document XML ï¿½ gï¿½nï¿½rer
 global $nom, $mdp;
 
 // inclusion de la classe Outils
 include_once ('../modele/Outils.class.php');
-// inclusion des paramètres de l'application
+// inclusion des paramï¿½tres de l'application
 include_once ('../modele/include.parametres.php');
 
-// crée une instance de DOMdocument
+// crï¿½e une instance de DOMdocument
 $doc = new DOMDocument();
 
 // specifie la version et le type d'encodage
 $doc->version = '1.0';
 $doc->encoding = 'ISO-8859-1';
 
-// crée un commentaire et l'encode en ISO
-$elt_commentaire = $doc->createComment('Service web ConsulterSalles - BTS SIO - Lycée De La Salle - Rennes');
-// place ce commentaire à la racine du document XML
+// crï¿½e un commentaire et l'encode en ISO
+$elt_commentaire = $doc->createComment('Service web ConsulterSalles - BTS SIO - LycÃ©e De La Salle - Rennes');
+// place ce commentaire ï¿½ la racine du document XML
 $doc->appendChild($elt_commentaire);
 
-// Récupération des données transmises
-// la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
+// Rï¿½cupï¿½ration des donnï¿½es transmises
+// la fonction $_GET rï¿½cupï¿½re une donnï¿½e passï¿½e en paramï¿½tre dans l'URL par la mï¿½thode GET
 if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
 if ( empty ($_GET ["mdp"]) == true)  $mdp = "";  else   $mdp = $_GET ["mdp"];
-// si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
-// la fonction $_POST récupère une donnée envoyées par la méthode POST
+// si l'URL ne contient pas les donnï¿½es, on regarde si elles ont ï¿½tï¿½ envoyï¿½es par la mï¿½thode POST
+// la fonction $_POST rï¿½cupï¿½re une donnï¿½e envoyï¿½es par la mï¿½thode POST
 if ( $nom == "" && $mdp == "" )
 {
     if ( empty ($_POST ["nom"]) == true)  $nom = "";  else   $nom = $_POST ["nom"];
     if ( empty ($_POST ["mdp"]) == true)  $mdp = "";  else   $mdp = $_POST ["mdp"];
 }
 
-// Contrôle de la présence des paramètres
+// Contrï¿½le de la prï¿½sence des paramï¿½tres
 if ($nom == "" || $mdp == "")
 {
-    TraitementAnormal ("Erreur : données incomplètes.");
+    TraitementAnormal ("Erreur : donnÃ©es incomplÃ¨tes.");
 }
 else
-{	// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
+{	// connexion du serveur web ï¿½ la base MySQL ("include_once" peut ï¿½tre remplacï¿½ par "require_once")
     include_once ('../modele/DAO.class.php');
     $dao = new DAO();
 
@@ -59,7 +59,7 @@ else
     else{
         TraitementNormal ();
     }
-    // ferme la connexion à MySQL
+    // ferme la connexion ï¿½ MySQL
     unset($dao);
 }
 
@@ -72,12 +72,12 @@ exit;
 
 // fonction de traitement des cas anormaux
 function TraitementAnormal($msg)
-{	// redéclaration des données globales utilisées dans la fonction
+{	// redï¿½claration des donnï¿½es globales utilisï¿½es dans la fonction
     global $doc;
-    // crée l'élément 'data' à la racine du document XML
+    // crï¿½e l'ï¿½lï¿½ment 'data' ï¿½ la racine du document XML
     $elt_data = $doc->createElement('data');
     $doc->appendChild($elt_data);
-    // place l'élément 'reponse' juste après l'élément 'data'
+    // place l'ï¿½lï¿½ment 'reponse' juste aprï¿½s l'ï¿½lï¿½ment 'data'
     $elt_reponse = $doc->createElement('reponse', $msg);
     $elt_data->appendChild($elt_reponse);
     return;
@@ -85,18 +85,18 @@ function TraitementAnormal($msg)
 
 // fonction de traitement des cas normaux
 function TraitementNormal($nomUser)
-{	// redéclaration des données globales utilisées dans la fonction
+{	// redï¿½claration des donnï¿½es globales utilisï¿½es dans la fonction
     global $doc;
     global $dao;
 
     $lesSalles = $dao->listeSalles();
     $nbSalles = count($lesSalles);
 
-    // crée l'élément 'data' à la racine du document XML
+    // crï¿½e l'ï¿½lï¿½ment 'data' ï¿½ la racine du document XML
     $elt_data = $doc->createElement('data');
     $doc->appendChild($elt_data);
-    // place l'élément 'reponse' juste après l'élément 'data'
-    $elt_reponse = $doc->createElement('reponse', "Il y a " . $nbSalles . " disponible(s) à la réservation.");
+    // place l'ï¿½lï¿½ment 'reponse' juste aprï¿½s l'ï¿½lï¿½ment 'data'
+    $elt_reponse = $doc->createElement('reponse', "Il y a " . $nbSalles . " disponible(s) Ã  la rÃ©sevation.");
     $elt_data->appendChild($elt_reponse);
 
     $elt_donnees = $doc->createElement('donnees');
@@ -104,12 +104,12 @@ function TraitementNormal($nomUser)
 
     foreach ($lesSalles as $uneSalle)
     {
-        // crée un élément vide 'reservation'
+        // crï¿½e un ï¿½lï¿½ment vide 'reservation'
         $elt_salle = $doc->createElement('salle');
-        // place l'élément 'reservation' dans l'élément 'donnees'
+        // place l'ï¿½lï¿½ment 'reservation' dans l'ï¿½lï¿½ment 'donnees'
         $elt_donnees->appendChild($elt_salle);
 
-        // crée les éléments enfants de l'élément 'reservation'
+        // crï¿½e les ï¿½lï¿½ments enfants de l'ï¿½lï¿½ment 'reservation'
         $elt_id         = $doc->createElement('id', utf8_encode($uneSalle->getId()));
         $elt_salle->appendChild($elt_id);
         $elt_room  = $doc->createElement('room', utf8_encode($uneSalle->getRoom_name()));

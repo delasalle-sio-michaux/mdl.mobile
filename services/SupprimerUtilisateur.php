@@ -1,45 +1,45 @@
 <?php
-// Service web du projet Réservations M2L
+// Service web du projet Rï¿½servations M2L
 // Ecrit le 24/10/2015 par Roger Alban
 
-// Ce service web permet à un administrateur de supprimer un utilisateur
+// Ce service web permet ï¿½ un administrateur de supprimer un utilisateur
 
-// Le service web doit recevoir 3 paramètres : nomAdmin, mdpAdmin, nomUser
-// Les paramètres peuvent être passés par la méthode GET (pratique pour les tests, mais à éviter en exploitation) :
-//     http://<hébergeur>/SupprimerUtilisateur.php?nomAdmin=zenelsy&mdpAdmin=passe&nomUser=
-// Les paramètres peuvent être passés par la méthode POST (à privilégier en exploitation pour la confidentialité des données) :
-//     http://<hébergeur>/SupprimerUtilisateur.php
+// Le service web doit recevoir 3 paramï¿½tres : nomAdmin, mdpAdmin, nomUser
+// Les paramï¿½tres peuvent ï¿½tre passï¿½s par la mï¿½thode GET (pratique pour les tests, mais ï¿½ ï¿½viter en exploitation) :
+//     http://<hï¿½bergeur>/SupprimerUtilisateur.php?nomAdmin=zenelsy&mdpAdmin=passe&nomUser=
+// Les paramï¿½tres peuvent ï¿½tre passï¿½s par la mï¿½thode POST (ï¿½ privilï¿½gier en exploitation pour la confidentialitï¿½ des donnï¿½es) :
+//     http://<hï¿½bergeur>/SupprimerUtilisateur.php
 
-// déclaration des variables globales pour pouvoir les utiliser aussi dans les fonctions
+// dï¿½claration des variables globales pour pouvoir les utiliser aussi dans les fonctions
 
-// déclaration des variables globales pour pouvoir les utiliser aussi dans les fonctions
-global $doc;		// le document XML à générer
+// dï¿½claration des variables globales pour pouvoir les utiliser aussi dans les fonctions
+global $doc;		// le document XML ï¿½ gï¿½nï¿½rer
 global $nomAdmin, $mdpAdmin, $nomUser;
 
 // inclusion de la classe Outils
 include_once ('../modele/Outils.class.php');
-// inclusion des paramètres de l'application
+// inclusion des paramï¿½tres de l'application
 include_once ('../modele/include.parametres.php');
 
-// crée une instance de DOMdocument
+// crï¿½e une instance de DOMdocument
 $doc = new DOMDocument();
 
 // specifie la version et le type d'encodage
 $doc->version = '1.0';
 $doc->encoding = 'ISO-8859-1';
 
-// crée un commentaire et l'encode en ISO
-$elt_commentaire = $doc->createComment('Service web SupprimerUtilisateur - BTS SIO - Lycée De La Salle - Rennes');
-// place ce commentaire à la racine du document XML
+// crï¿½e un commentaire et l'encode en ISO
+$elt_commentaire = $doc->createComment('Service web SupprimerUtilisateur - BTS SIO - LycÃ©e De La Salle - Rennes');
+// place ce commentaire ï¿½ la racine du document XML
 $doc->appendChild($elt_commentaire);
 
-// Récupération des données transmises
-// la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
+// Rï¿½cupï¿½ration des donnï¿½es transmises
+// la fonction $_GET rï¿½cupï¿½re une donnï¿½e passï¿½e en paramï¿½tre dans l'URL par la mï¿½thode GET
 if ( empty ($_GET ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_GET ["nomAdmin"];
 if ( empty ($_GET ["mdpAdmin"]) == true)  $mdpAdmin = "";  else   $mdpAdmin = $_GET ["mdpAdmin"];
 if ( empty ($_GET ["nomUser"]) == true)  $nomUser = "";  else   $nomUser = $_GET ["nomUser"];
-// si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
-// la fonction $_POST récupère une donnée envoyées par la méthode POST
+// si l'URL ne contient pas les donnï¿½es, on regarde si elles ont ï¿½tï¿½ envoyï¿½es par la mï¿½thode POST
+// la fonction $_POST rï¿½cupï¿½re une donnï¿½e envoyï¿½es par la mï¿½thode POST
 if ( $nomAdmin == "" && $mdpAdmin == "" && $nomUser == "" )
 {
     if ( empty ($_POST ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_POST ["nomAdmin"];
@@ -47,13 +47,13 @@ if ( $nomAdmin == "" && $mdpAdmin == "" && $nomUser == "" )
     if ( empty ($_POST ["nomUser"]) == true)  $nomUser = "";  else   $nomUser = $_POST ["nomUser"];
 }
 
-// Contrôle de la présence des paramètres
+// Contrï¿½le de la prï¿½sence des paramï¿½tres
 if ($nomAdmin == "" || $mdpAdmin == "" || $nomUser == "")
 {
-    TraitementAnormal ("Erreur : données incomplètes.");
+    TraitementAnormal ("Erreur : donnÃ©es incomplÃ¨tes.");
 }
 else
-{	// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
+{	// connexion du serveur web ï¿½ la base MySQL ("include_once" peut ï¿½tre remplacï¿½ par "require_once")
     include_once ('../modele/DAO.class.php');
     $dao = new DAO();
 
@@ -64,13 +64,13 @@ else
             TraitementAnormal ("Erreur : nom d'utilisateur inexistant.");
         else{
             if($dao->aPasseDesReservations($nomUser))
-                TraitementAnormal ("Erreur : cet utilisateur a passé des réservations à venir.");
+                TraitementAnormal ("Erreur : cet utilisateur a passÃ© des rÃ©servations Ã  venir.");
             else{
                 TraitementNormal();
             }
         }
     }
-    // ferme la connexion à MySQL
+    // ferme la connexion ï¿½ MySQL
     unset($dao);
 }
 
@@ -83,12 +83,12 @@ exit;
 
 // fonction de traitement des cas anormaux
 function TraitementAnormal($msg)
-{	// redéclaration des données globales utilisées dans la fonction
+{	// redï¿½claration des donnï¿½es globales utilisï¿½es dans la fonction
     global $doc;
-    // crée l'élément 'data' à la racine du document XML
+    // crï¿½e l'ï¿½lï¿½ment 'data' ï¿½ la racine du document XML
     $elt_data = $doc->createElement('data');
     $doc->appendChild($elt_data);
-    // place l'élément 'reponse' juste après l'élément 'data'
+    // place l'ï¿½lï¿½ment 'reponse' juste aprï¿½s l'ï¿½lï¿½ment 'data'
     $elt_reponse = $doc->createElement('reponse', $msg);
     $elt_data->appendChild($elt_reponse);
     return;
@@ -96,7 +96,7 @@ function TraitementAnormal($msg)
 
 // fonction de traitement des cas normaux
 function TraitementNormal($nomUser)
-{	// redéclaration des données globales utilisées dans la fonction
+{	// redï¿½claration des donnï¿½es globales utilisï¿½es dans la fonction
     global $doc;
     global $dao;
     global $ADR_MAIL_EMETTEUR;
@@ -104,20 +104,20 @@ function TraitementNormal($nomUser)
     $email = $dao->getUtilisateur($nomUser)->getEmail();
     // envoie un mail de confirmation de l'enregistrement
     $sujet = "Suppression de votre compte M2L";
-    $message = "Votre compte de la M2L a été supprimé.";
+    $message = "Votre compte de la M2L a Ã©tÃ© supprimÃ©.";
 
     $ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
     if ( $ok )
-        $msg = "Enregistrement effectué, vous allez recevoir un mail de confirmation.";
+        $msg = "Enregistrement effectuÃ©, vous allez recevoir un mail de confirmation.";
     else
-        $msg = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+        $msg = "Enregistrement effectuÃ© ; l'envoi du mail Ã  l'utilisateur a rencontrÃ© un problÃ¨me.";
 
     $dao->supprimerUtilisateur($nomUser);
 
-    // crée l'élément 'data' à la racine du document XML
+    // crï¿½e l'ï¿½lï¿½ment 'data' ï¿½ la racine du document XML
     $elt_data = $doc->createElement('data');
     $doc->appendChild($elt_data);
-    // place l'élément 'reponse' juste après l'élément 'data'
+    // place l'ï¿½lï¿½ment 'reponse' juste aprï¿½s l'ï¿½lï¿½ment 'data'
     $elt_reponse = $doc->createElement('reponse', $msg);
     $elt_data->appendChild($elt_reponse);
     //echo $msg;
